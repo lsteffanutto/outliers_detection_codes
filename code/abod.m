@@ -30,7 +30,7 @@ clc, clear
 
 load('iris.mat', '-mat');
 
-A=iris(:,[1;2]);
+A=iris(:,[1;3]);
 %A=iris(:,[1;2;5]);
 B=A;
 [A, ia, ic] = unique(A,'rows'); % enlever les répétitions
@@ -58,8 +58,9 @@ for i=1:instance_number % Pour chaque point
     var_array(i) = var(M);                                                % puis tu calcul la variance de ses angles
 end
 
-min_var_array = min(var_array);                                                                                                                                       
-abof = (var_array - min_var_array) / (max(var_array) - min_var_array);
+[min_var_array, idx_min_var_array] = min(var_array);                                                                                                                                       
+abof = (var_array - min_var_array) / (max(var_array) - min_var_array);  % Normalisation ?
+%abof = var_array;
 origin_abof = zeros(origin_instance_number, 1);
 
 for i=1:origin_instance_number
@@ -68,6 +69,10 @@ end
 
 abof = origin_abof;
 [yepee, suspicious_index] = sort(abof);
+suspicious_index(1:5)
+for i = 1:5
+    A(suspicious_index(i),:)
+end
 A=B;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 S=size(A);
